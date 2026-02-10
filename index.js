@@ -23,7 +23,7 @@ app.post("/scan-invoice", upload.single("file"), async (req, res) => {
       {
         headers: {
           ...formData.getHeaders(),
-          Authorization: `Token ${MINDEE_API_KEY}`,
+          Authorization: `Token ${process.env.MINDEE_API_KEY}`,
         },
       }
     );
