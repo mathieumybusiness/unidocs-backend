@@ -20,7 +20,7 @@ app.post("/scan-invoice", upload.single("file"), async (req, res) => {
     );
 
     const response = await axios.post(
-      "https://api.mindee.net/v2/products/mindee/invoices/predict",
+      "https://api.mindee.net/v2/products/mindee/invoices/v4/predict",
       formData,
       {
         headers: {
@@ -32,9 +32,7 @@ app.post("/scan-invoice", upload.single("file"), async (req, res) => {
 
     res.json(response.data);
   } catch (err) {
-    console.error(
-      err.response?.data || err.message
-    );
+    console.error(err.response?.data || err.message);
     res.status(500).json({
       error: "Mindee error",
       details: err.response?.data,
