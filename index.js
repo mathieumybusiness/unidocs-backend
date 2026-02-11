@@ -6,7 +6,6 @@ import FormData from "form-data";
 const app = express();
 const upload = multer();
 
-// clé Mindee V2 (md_...)
 const MINDEE_API_KEY = process.env.MINDEE_API_KEY;
 
 app.post("/scan-invoice", upload.single("file"), async (req, res) => {
@@ -16,24 +15,22 @@ app.post("/scan-invoice", upload.single("file"), async (req, res) => {
     }
 
     const formData = new FormData();
-    formData.append("document", req.file.buffer, req.file.originalname);
+    formData.append("file", req.file.buffer, req.file.originalname);
 
     const response = await axios.post(
-      // ✅ API V2 INVOICES (IMPORTANT)
-      "https://api.mindee.net/v2/products/mindee/invoices/predict",
+      "https://api.mindee.net/v2/products/mindee/invoice/predict",
       formData,
       {
         headers: {
           ...formData.getHeaders(),
           Authorization: `Token ${MINDEE_API_KEY}`,
         },
-        maxBodyLength: Infinity,
       }
     );
 
     res.json(response.data);
   } catch (err) {
-    console.error("Mindee error:", err.response?.data || err.message);
+    console.error(err.response?.data || err.message);
     res.status(500).json({
       error: "Mindee error",
       details: err.response?.data || err.message,
