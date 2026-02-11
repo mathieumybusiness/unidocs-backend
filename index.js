@@ -22,7 +22,7 @@ app.post("/scan-invoice", upload.single("file"), async (req, res) => {
     );
 
     const response = await axios.post(
-      "https://api.mindee.net/v2/products/mindee/invoice/predict",
+      "https://api.mindee.net/v2/products/mindee/invoices/predict",
       formData,
       {
         headers: {
